@@ -44,7 +44,13 @@ class Controller extends BaseController
                 } else {
                     $user->score++;
                     $text = 'Your score is:' . $user->score;
-                    $link = 'https://radient360.com/wp-content/uploads/2020/03/file_example_MP4_480_1_5MG.mp4';
+                    $videos = [
+                        'https://download.samplelib.com/mp4/sample-5s.mp4',
+                        'https://radient360.com/wp-content/uploads/2020/03/file_example_MP4_480_1_5MG.mp4',
+                        'https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4',
+                        'https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.webm'
+                    ];
+                    $link = $videos[rand(0,3)];
                 }
             }
 
