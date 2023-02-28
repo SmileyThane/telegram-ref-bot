@@ -22,8 +22,10 @@ class Controller extends BaseController
         Log::debug($message);
         if (array_key_exists('callback_query', $message)) {
             $message = $message['callback_query'];
+            $msgTtext = $message['message']['inline_keyboard'][0][0]['inline_keyboard'];
         } else if (array_key_exists('message', $message)) {
             $message = $message['message'];
+            $msgTtext = $message['text'];
         }
 
         $telegramId = $message['from']['id'];
@@ -32,7 +34,7 @@ class Controller extends BaseController
         $text = 'click start';
         $link = '';
         if ($user) {
-            if (array_key_exists('text', $message) && $message['text'] === '/next') {
+            if ($msgTtext === 'next') {
                 $text = 'test_content' . $user->score;
                 if ($user->score % 10 === 0) {
                     $text = 'test_redirect';
@@ -49,7 +51,7 @@ class Controller extends BaseController
         }
 
         Notification::route('telegram', $user->telegram_id)
-            ->notify(new NewTelegramNotification($user->telegram_id, $text, $link, ['button']));
+            ->notify(new NewTelegramNotification($user->telegram_id, $text, $link, ['next']));
 
 
         return null;
