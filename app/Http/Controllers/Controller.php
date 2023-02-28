@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Notifications\NewTelegramNotification;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
@@ -21,35 +20,39 @@ class Controller extends BaseController
         Log::info('new telegram data incoming');
         $message = json_decode(file_get_contents('php://input'), true);
         Log::debug($message);
+        $telegramId = null;
         if (array_key_exists('callback_query', $message)) {
             $message = $message['callback_query'];
+            $telegramId = $message['to']['id'];
         }
         if (array_key_exists('message', $message)) {
             $message = $message['message'];
-            $user = User::query()->where('telegram_id', '=', $message['from']['id'])->first();
-            $text = 'click start';
-            $link = '';
-            if ($user) {
-                if ($message['text'] === '/next') {
-                    $text = 'test_content' . $user->score;
-                    if ($user->score % 10 === 0) {
-                        $text = 'test_redirect';
-                    } else {
-                        $user->score++;
-                        $user->save();
-                        $link = 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4';
-                    }
-                }
-            } else {
-                $user = new User;
-                $user->telegram_id = $message['from']['id'];
-                $user->save();
-            }
-
-            Notification::route('telegram', $user->telegram_id)
-                ->notify(new NewTelegramNotification($user->telegram_id, $text, $link, ['button']));
-
+            $telegramId = $message['from']['id'];
         }
+
+        $user = User::query()->where('telegram_id', '=', $telegramId)->first();
+        $text = 'click start';
+        $link = '';
+        if ($user) {
+            if ($message['text'] === '/next') {
+                $text = 'test_content' . $user->score;
+                if ($user->score % 10 === 0) {
+                    $text = 'test_redirect';
+                } else {
+                    $user->score++;
+                    $user->save();
+                    $link = 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4';
+                }
+            }
+        } else {
+            $user = new User;
+            $user->telegram_id = $telegramId;
+            $user->save();
+        }
+
+        Notification::route('telegram', $user->telegram_id)
+            ->notify(new NewTelegramNotification($user->telegram_id, $text, $link, ['button']));
+
 
         return null;
     }
