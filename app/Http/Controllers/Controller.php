@@ -21,6 +21,9 @@ class Controller extends BaseController
         Log::info('new telegram data incoming');
         $message = json_decode(file_get_contents('php://input'), true);
         Log::debug($message);
+        if (array_key_exists('callback_query', $message)) {
+            $message = $message['callback_query'];
+        }
         if (array_key_exists('message', $message)) {
             $message = $message['message'];
             $user = User::query()->where('telegram_id', '=', $message['from']['id'])->first();
