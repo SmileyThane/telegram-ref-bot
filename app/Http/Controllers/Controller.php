@@ -31,7 +31,6 @@ class Controller extends BaseController
                     $text = 'test_content' . $user->score;
                     if ($user->score % 10 === 0) {
                         $text = 'test_redirect';
-                        $link = 'https://test.com';
                     } else {
                         $user->score++;
                         $user->save();
