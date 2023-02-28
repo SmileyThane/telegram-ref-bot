@@ -35,11 +35,12 @@ class Controller extends BaseController
         $user = User::query()->where('telegram_id', '=', $telegramId)->first();
         $text = 'Click Next!';
         $link = '';
+        $button = 'Watch';
         if ($user) {
-            Log::debug('telegram_id=' . $user->telegram_id . ': score=' . $user->score);
-
-            if ($msgTtext === 'next') {
+            $button = 'Next';
+            if ($msgTtext === 'Next' || $msgTtext === 'Watch') {
                 if ($user->score > 0 && $user->score % 10 === 0) {
+                    $user->score++;
                     $text = 'Follow this link to see next videos: https://test.com';
                 } else {
                     $user->score++;
@@ -67,7 +68,7 @@ class Controller extends BaseController
         }
 
         Notification::route('telegram', $user->telegram_id)
-            ->notify(new NewTelegramNotification($user->telegram_id, $text, $link, ['next', 'Get money']));
+            ->notify(new NewTelegramNotification($user->telegram_id, $text, $link, [$button, 'Get money']));
 
         return null;
     }
