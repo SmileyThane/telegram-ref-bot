@@ -22,7 +22,7 @@ class Controller extends BaseController
         $message = json_decode(file_get_contents('php://input'), true);
         if (array_key_exists('message', $message)) {
             Log::debug($message['message']);
-            $message = ['message'];
+            $message = $message['message'];
             $user = User::query()->where('telegram_id', '=', $message['from']['id'])->first();
             $text = 'click start';
             $link = '';
