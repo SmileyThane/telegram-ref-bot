@@ -15,4 +15,4 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/webhook',[Controller::class , 'store']);
+Route::post('/webhook',[Controller::class , 'store']);
