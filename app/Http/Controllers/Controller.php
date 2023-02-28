@@ -39,13 +39,14 @@ class Controller extends BaseController
             Log::debug('telegram_id=' . $user->telegram_id . ': score=' . $user->score);
             if ($msgTtext === 'next') {
                 $text = 'test content';
-                if ($user->score % 10 === 0) {
+                if ($user->score > 0 && $user->score % 10 === 0) {
                     $text = 'test redirect';
                 } else {
-                    $user->score = $user->score + 1;
-                    $user->save();
-//                    $link = 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4';
+                    $link = 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4';
                 }
+                $user->score++;
+                $user->save();
+
             }
         } else {
             $user = new User;
