@@ -25,7 +25,7 @@ class Controller extends BaseController
             $msgTtext = $message['message']['reply_markup']['inline_keyboard'][0][0]['inline_keyboard'];
         } else if (array_key_exists('message', $message)) {
             $message = $message['message'];
-            Log::debug($message['message']);
+            Log::debug($message);
             $msgTtext = $message['text'];
         }
 
