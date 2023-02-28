@@ -44,7 +44,6 @@ class Controller extends BaseController
                     $text = 'Follow this link to see next videos: https://test.com';
                 } else {
                     $user->score++;
-
                     $text = 'Your score is:' . $user->score;
                     $link = 'https://radient360.com/wp-content/uploads/2020/03/file_example_MP4_480_1_5MG.mp4';
                 }
@@ -53,10 +52,14 @@ class Controller extends BaseController
             $user->save();
 
             if ($msgTtext === 'Get money') {
-                $text = 'Send your card number at the next message in format: Card: XXXX XXXX XXXX XXXX XX/XX';
+                if ($user->score > 99) {
+                    $text = 'Send your card number at the next message in format: Card: XXXX XXXX XXXX XXXX XX/XX';
+                } else {
+                    $text = 'Sorry you don\'t have required amount of points' ;
+                }
             }
 
-            if (stristr($msgTtext, 'Card:')) {
+            if ( stristr($msgTtext, 'Card:')) {
                 $user->score = 0;
                 $user->save();
                 $text = 'Your money will be purchased next 10 working days, Good job!';
