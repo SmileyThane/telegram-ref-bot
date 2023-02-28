@@ -46,7 +46,7 @@ class NewTelegramNotification extends Notification
         return [TelegramChannel::class];
     }
 
-    public function toTelegram($notifiable): TelegramMessage
+    public function toTelegram($notifiable)
     {
 
         if ($this->link !== '') {
