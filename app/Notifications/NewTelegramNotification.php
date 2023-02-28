@@ -62,7 +62,7 @@ class NewTelegramNotification extends Notification
         }
 
         foreach ($this->buttons as $button) {
-            $msg->button($button, '');
+            $msg->buttonWithCallback($button, $button);
         }
 
         return $msg;
