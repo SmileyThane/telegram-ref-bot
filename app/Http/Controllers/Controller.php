@@ -38,9 +38,9 @@ class Controller extends BaseController
         if ($user) {
             Log::debug('telegram_id=' . $user->telegram_id . ': score=' . $user->score);
             if ($msgTtext === 'next') {
-                $text = 'test_content';
+                $text = 'test content';
                 if ($user->score % 10 === 0) {
-                    $text = 'test_redirect';
+                    $text = 'test redirect';
 //                } else {
 //                    $user->score = $user->score + 1;
 //                    $user->save();
