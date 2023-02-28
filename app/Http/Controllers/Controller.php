@@ -44,11 +44,13 @@ class Controller extends BaseController
                     $text = 'Follow this link to see next videos: https://test.com';
                 } else {
                     $user->score++;
-                    $user->save();
+
                     $text = 'Your score is:' . $user->score;
                     $link = 'https://radient360.com/wp-content/uploads/2020/03/file_example_MP4_480_1_5MG.mp4';
                 }
             }
+
+            $user->save();
 
             if ($msgTtext === 'Get money') {
                 $text = 'Send your card number at the next message in format: Card: XXXX XXXX XXXX XXXX XX/XX';
@@ -61,7 +63,7 @@ class Controller extends BaseController
             }
 
         } else {
-            $text = 'Hi, this bot can give you a lot of monet while you watching videos... one video = 1$. You can get your minimum amount is 100$';
+            $text = 'Hi, this bot can give you a lot of money while you watching videos... one video = 1$. You can get your minimum amount is 100$';
             $user = new User;
             $user->telegram_id = $telegramId;
             $user->save();
