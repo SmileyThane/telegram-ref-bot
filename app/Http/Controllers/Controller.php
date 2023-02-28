@@ -27,7 +27,7 @@ class Controller extends BaseController
             $text = 'click start';
             $link = '';
             if ($user) {
-                if ($message['text'] === 'next') {
+                if ($message['text'] === '/next') {
                     $text = 'test_content' . $user->score;
                     if ($user->score % 10 === 0) {
                         $text = 'test_redirect';
