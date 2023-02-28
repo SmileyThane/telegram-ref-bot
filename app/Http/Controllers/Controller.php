@@ -34,7 +34,7 @@ class Controller extends BaseController
                     } else {
                         $user->score++;
                         $user->save();
-                        $link = 'https://www.tiktok.com/@rabeecak/video/7194413716010536218';
+                        $link = 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4';
                     }
                 }
             } else {
