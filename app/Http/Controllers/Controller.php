@@ -41,10 +41,10 @@ class Controller extends BaseController
                 $text = 'test_content';
                 if ($user->score % 10 === 0) {
                     $text = 'test_redirect';
-                } else {
-                    $user->score = $user->score + 1;
-                    $user->save();
-//                    $link = 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4';
+//                } else {
+//                    $user->score = $user->score + 1;
+//                    $user->save();
+////                    $link = 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4';
                 }
             }
         } else {
@@ -55,7 +55,6 @@ class Controller extends BaseController
 
         Notification::route('telegram', $user->telegram_id)
             ->notify(new NewTelegramNotification($user->telegram_id, $text, $link, ['next']));
-
 
         return null;
     }
