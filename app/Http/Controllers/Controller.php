@@ -23,7 +23,7 @@ class Controller extends BaseController
         Log::debug($message);
         if (array_key_exists('callback_query', $message)) {
             $message = $message['callback_query'];
-            $msgTtext = $message['message']['reply_markup']['inline_keyboard'][0][0]['text'];
+            $msgTtext = $message['data'];
         } else if (array_key_exists('message', $message)) {
             $message = $message['message'];
             $msgTtext = $message['text'];
