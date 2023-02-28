@@ -49,7 +49,7 @@ class Controller extends BaseController
                         'https://radient360.com/wp-content/uploads/2020/03/file_example_MP4_480_1_5MG.mp4',
                         'https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4',
                     ];
-                    $link = $videos[rand(0,3)];
+                    $link = $videos[rand(0,2)];
                 }
             }
 
