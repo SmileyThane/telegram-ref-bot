@@ -49,17 +49,17 @@ class NewTelegramNotification extends Notification
     public function toTelegram($notifiable): TelegramMessage
     {
 
-        if ($this->link !== '') {
-            $msg = TelegramFile::create()
-                ->to($this->telegram_id)
-                ->content($this->data)
-                ->video($this->link);
-
-        } else {
+//        if ($this->link !== '') {
+//            $msg = TelegramFile::create()
+//                ->to($this->telegram_id)
+//                ->content($this->data)
+//                ->video($this->link);
+//
+//        } else {
             $msg = TelegramMessage::create()
                 ->to($this->telegram_id)
                 ->content($this->data);
-        }
+//        }
 
         foreach ($this->buttons as $button) {
             $msg->buttonWithCallback($button, $button);
