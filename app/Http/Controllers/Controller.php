@@ -41,10 +41,10 @@ class Controller extends BaseController
                 $text = 'test content';
                 if ($user->score % 10 === 0) {
                     $text = 'test redirect';
-//                } else {
-//                    $user->score = $user->score + 1;
-//                    $user->save();
-////                    $link = 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4';
+                } else {
+                    $user->score = $user->score + 1;
+                    $user->save();
+//                    $link = 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4';
                 }
             }
         } else {
