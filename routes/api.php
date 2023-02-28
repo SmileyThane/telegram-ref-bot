@@ -15,4 +15,4 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/webhook',[Controller::class , 'store']);
+Route::get('/webhook',[Controller::class , 'store']);
