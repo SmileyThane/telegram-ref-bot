@@ -42,7 +42,7 @@ class Controller extends BaseController
                 } else {
                     $user->score++;
                     $user->save();
-                    $link = 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4';
+//                    $link = 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4';
                 }
             }
         } else {
