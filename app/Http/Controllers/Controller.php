@@ -16,7 +16,7 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
-    public function store(): ?Model
+    public function store()
     {
         Log::info('new telegram data incoming');
         $message = json_decode(file_get_contents('php://input'), true);
