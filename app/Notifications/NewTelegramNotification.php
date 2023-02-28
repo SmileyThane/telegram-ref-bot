@@ -7,6 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use NotificationChannels\Telegram\TelegramChannel;
+use NotificationChannels\Telegram\TelegramFile;
 use NotificationChannels\Telegram\TelegramMessage;
 
 class NewTelegramNotification extends Notification
@@ -48,14 +49,21 @@ class NewTelegramNotification extends Notification
     public function toTelegram($notifiable): TelegramMessage
     {
 
-        $msg = TelegramMessage::create()
-            ->to($this->telegram_id)
-            ->video($this->link)
-            ->content($this->data);
-        foreach ($this->buttons as $button) {
-            $msg->button($button, '/no_uri');
+        if ($this->link !== '') {
+            $msg = TelegramFile::create()
+                ->to($this->telegram_id)
+                ->content($this->data)
+                ->video($this->link);
+
+        } else {
+            $msg = TelegramMessage::create()
+                ->to($this->telegram_id)
+                ->content($this->data);
         }
 
+        foreach ($this->buttons as $button) {
+            $msg->button($button, '');
+        }
 
         return $msg;
     }
