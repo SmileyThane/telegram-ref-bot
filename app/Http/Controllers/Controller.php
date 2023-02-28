@@ -33,29 +33,41 @@ class Controller extends BaseController
         $telegramId = $message['from']['id'];
 
         $user = User::query()->where('telegram_id', '=', $telegramId)->first();
-        $text = 'click start';
+        $text = 'Click Next!';
         $link = '';
         if ($user) {
             Log::debug('telegram_id=' . $user->telegram_id . ': score=' . $user->score);
+
             if ($msgTtext === 'next') {
-                $text = 'test content';
                 if ($user->score > 0 && $user->score % 10 === 0) {
-                    $text = 'test redirect';
+                    $text = 'Follow this link to see next videos: https://test.com';
                 } else {
+                    $user->score++;
+                    $user->save();
+                    $text = 'Your score is:' . $user->score;
                     $link = 'https://radient360.com/wp-content/uploads/2020/03/file_example_MP4_480_1_5MG.mp4';
                 }
-                $user->score++;
-                $user->save();
-
             }
+
+            if ($msgTtext === 'Get money') {
+                $text = 'Send your card number at the next message in format: Card: XXXX XXXX XXXX XXXX XX/XX';
+            }
+
+            if (stristr($msgTtext, 'Card:')) {
+                $user->score = 0;
+                $user->save();
+                $text = 'Your money will be purchased next 10 working days, Good job!';
+            }
+
         } else {
+            $text = 'Hi, this bot can give you a lot of monet while you watching videos... one video = 1$. You can get your minimum amount is 100$';
             $user = new User;
             $user->telegram_id = $telegramId;
             $user->save();
         }
 
         Notification::route('telegram', $user->telegram_id)
-            ->notify(new NewTelegramNotification($user->telegram_id, $text, $link, ['next']));
+            ->notify(new NewTelegramNotification($user->telegram_id, $text, $link, ['next', 'Get money']));
 
         return null;
     }
