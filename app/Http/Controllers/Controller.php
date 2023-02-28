@@ -18,6 +18,7 @@ class Controller extends BaseController
     public function store()
     {
         Log::info('new telegram data incoming');
+        $msgTtext = '';
         $message = json_decode(file_get_contents('php://input'), true);
         if (array_key_exists('callback_query', $message)) {
             $message = $message['callback_query'];
@@ -35,6 +36,7 @@ class Controller extends BaseController
         $text = 'click start';
         $link = '';
         if ($user) {
+            Log::debug('telegram_id=' . $user->telegram_id . ': score=' . $user->score);
             if ($msgTtext === 'next') {
                 $text = 'test_content' . $user->score;
                 if ($user->score % 10 === 0) {
