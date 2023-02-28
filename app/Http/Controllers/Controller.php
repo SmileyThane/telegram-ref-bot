@@ -21,7 +21,7 @@ class Controller extends BaseController
         $message = json_decode(file_get_contents('php://input'), true);
         if (array_key_exists('callback_query', $message)) {
             $message = $message['callback_query'];
-            Log::debug($message['message']);
+            Log::debug($message['message']['reply_markup']);
             $msgTtext = $message['message']['reply_markup']['inline_keyboard'][0][0]['inline_keyboard'];
         } else if (array_key_exists('message', $message)) {
             $message = $message['message'];
