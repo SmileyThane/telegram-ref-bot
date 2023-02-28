@@ -42,7 +42,7 @@ class Controller extends BaseController
                 if ($user->score > 0 && $user->score % 10 === 0) {
                     $text = 'test redirect';
                 } else {
-                    $link = 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4';
+                    $link = 'https://v16-webapp-prime.tiktok.com/video/tos/useast2a/tos-useast2a-pve-0037c001-aiso/oYo6X7QUhozAfPzfOJBRXja2DBZDVCQaI8NWti/?a=1988&ch=0&cr=0&dr=0&lr=tiktok&cd=0%7C0%7C1%7C0&cv=1&br=1444&bt=722&cs=0&ds=3&ft=TYOI31w5vjVQ99_gLPTsd3cw4i_a7uwQAVyeN_SyJE&mime_type=video_mp4&qs=0&rc=aGU6NjxnaTg2NzozPGVlaUBpanBobjY6Zm53aTMzZjgzM0AxL2ExXjUtNmAxYS80MTFiYSNfMWNgcjRfanBgLS1kL2Nzcw%3D%3D&btag=80000&expire=1677619506&l=20230228152447EDD1ECDDB1B90010F321&ply_type=2&policy=2&signature=1baf71831c9fc406440b6148b1b37382&tk=tt_chain_token';
                 }
                 $user->score++;
                 $user->save();
