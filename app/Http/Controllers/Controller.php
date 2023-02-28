@@ -20,15 +20,15 @@ class Controller extends BaseController
         Log::info('new telegram data incoming');
         $message = json_decode(file_get_contents('php://input'), true);
         Log::debug($message);
-        $telegramId = null;
         if (array_key_exists('callback_query', $message)) {
             $message = $message['callback_query'];
-            $telegramId = $message['to']['id'];
         }
+
         if (array_key_exists('message', $message)) {
             $message = $message['message'];
-            $telegramId = $message['from']['id'];
         }
+
+        $telegramId = $message['from']['id'];
 
         $user = User::query()->where('telegram_id', '=', $telegramId)->first();
         $text = 'click start';
