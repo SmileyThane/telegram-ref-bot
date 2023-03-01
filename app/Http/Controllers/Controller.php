@@ -59,15 +59,15 @@ class Controller extends BaseController
                     }
                 }
 
-            $user->save();
+                $user->save();
 
-            if ($msgTtext === 'Get money') {
-                if ($user->score > 99) {
-                    $text = 'Send your card number at the next message in format: Card: XXXX XXXX XXXX XXXX XX/XX';
-                } else {
-                    $text = 'Sorry you don\'t have required amount of points' ;
+                if ($msgTtext === 'Get money') {
+                    if ($user->score > 99) {
+                        $text = 'Send your card number at the next message in format: Card: XXXX XXXX XXXX XXXX XX/XX';
+                    } else {
+                        $text = 'Sorry you don\'t have required amount of points' ;
+                    }
                 }
-            }
 
             if ( stristr($msgTtext, 'Card:')) {
                 $user->score = 0;
