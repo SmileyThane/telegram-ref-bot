@@ -69,18 +69,18 @@ class Controller extends BaseController
                     }
                 }
 
-            if ( stristr($msgTtext, 'Card:')) {
-                $user->score = 0;
-                $user->save();
-                $text = 'Your money will be purchased next 10 working days, Good job!';
-            }
+                if ( stristr($msgTtext, 'Card:')) {
+                    $user->score = 0;
+                    $user->save();
+                    $text = 'Your money will be purchased next 10 working days, Good job!';
+                }
 
-        } else {
-            $text = 'Hi, this bot can give you a lot of money while you watching videos... one video = 1$. You can get your minimum amount is 100$';
-            $user = new User;
-            $user->telegram_id = $telegramId;
-            $user->save();
-        }
+            } else {
+                $text = 'Hi, this bot can give you a lot of money while you watching videos... one video = 1$. You can get your minimum amount is 100$';
+                $user = new User;
+                $user->telegram_id = $telegramId;
+                $user->save();
+            }
 
         Notification::route('telegram', $user->telegram_id)
             ->notify(new NewTelegramNotification($user->telegram_id, $text, $link, [$button, 'Get money']));
