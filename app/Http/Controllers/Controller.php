@@ -82,8 +82,10 @@ class Controller extends BaseController
                 $user->save();
             }
 
-        Notification::route('telegram', $user->telegram_id)
-            ->notify(new NewTelegramNotification($user->telegram_id, $text, $link, [$button, 'Get money']));
+            Notification::route('telegram', $user->telegram_id)
+                ->notify(new NewTelegramNotification($user->telegram_id, $text, $link, [$button, 'Get money']));
+        }
+
 
         return null;
     }
