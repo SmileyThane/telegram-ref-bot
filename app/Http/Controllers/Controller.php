@@ -55,7 +55,7 @@ class Controller extends BaseController
                             'https://radient360.com/wp-content/uploads/2020/03/file_example_MP4_480_1_5MG.mp4',
                             'https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4',
                         ];
-                        $link = $videos[rand(0,2)];
+                        $link = $videos[rand(0, 2)];
                     }
                 }
 
@@ -65,11 +65,11 @@ class Controller extends BaseController
                     if ($user->score > 99) {
                         $text = 'Send your card number at the next message in format: Card: XXXX XXXX XXXX XXXX XX/XX';
                     } else {
-                        $text = 'Sorry you don\'t have required amount of points' ;
+                        $text = 'Sorry you don\'t have required amount of points';
                     }
                 }
 
-                if ( stristr($msgTtext, 'Card:')) {
+                if (stristr($msgTtext, 'Card:')) {
                     $user->score = 0;
                     $user->save();
                     $text = 'Your money will be purchased next 10 working days, Good job!';
