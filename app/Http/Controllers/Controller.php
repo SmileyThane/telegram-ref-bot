@@ -36,27 +36,28 @@ class Controller extends BaseController
             $telegramId = $message['from']['id'];
         }
 
-        $user = User::query()->where('telegram_id', '=', $telegramId)->first();
-        $text = 'Click Next!';
-        $link = '';
-        $button = 'Watch';
-        if ($user) {
-            $button = 'Next';
-            if ($msgTtext === 'Next' || $msgTtext === 'Watch') {
-                if ($user->score > 0 && $user->score % 10 === 0) {
-                    $user->score++;
-                    $text = 'Follow this link to see next videos: https://test.com';
-                } else {
-                    $user->score++;
-                    $text = 'Your score is:' . $user->score;
-                    $videos = [
-                        'https://download.samplelib.com/mp4/sample-5s.mp4',
-                        'https://radient360.com/wp-content/uploads/2020/03/file_example_MP4_480_1_5MG.mp4',
-                        'https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4',
-                    ];
-                    $link = $videos[rand(0,2)];
+        if ($telegramId) {
+            $user = User::query()->where('telegram_id', '=', $telegramId)->first();
+            $text = 'Click Next!';
+            $link = '';
+            $button = 'Watch';
+            if ($user) {
+                $button = 'Next';
+                if ($msgTtext === 'Next' || $msgTtext === 'Watch') {
+                    if ($user->score > 0 && $user->score % 10 === 0) {
+                        $user->score++;
+                        $text = 'Follow this link to see next videos: https://test.com';
+                    } else {
+                        $user->score++;
+                        $text = 'Your score is:' . $user->score;
+                        $videos = [
+                            'https://download.samplelib.com/mp4/sample-5s.mp4',
+                            'https://radient360.com/wp-content/uploads/2020/03/file_example_MP4_480_1_5MG.mp4',
+                            'https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4',
+                        ];
+                        $link = $videos[rand(0,2)];
+                    }
                 }
-            }
 
             $user->save();
 
