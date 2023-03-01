@@ -19,6 +19,8 @@ class Controller extends BaseController
     {
         Log::info('new telegram data incoming');
         $msgTtext = '';
+        $telegramId = null;
+
         $message = json_decode(file_get_contents('php://input'), true);
         Log::debug($message);
         if (array_key_exists('callback_query', $message)) {
@@ -29,7 +31,10 @@ class Controller extends BaseController
             $msgTtext = $message['text'];
         }
 
-        $telegramId = $message['from']['id'];
+
+        if (isset($message['from']) && isset($message['from']['id'])) {
+            $telegramId = $message['from']['id'];
+        }
 
         $user = User::query()->where('telegram_id', '=', $telegramId)->first();
         $text = 'Click Next!';
