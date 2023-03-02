@@ -15,6 +15,7 @@ class CreateContentLinksTable extends Migration
     {
         Schema::create('content_links', function (Blueprint $table) {
             $table->id();
+            $table->string('link');
             $table->timestamps();
         });
     }
