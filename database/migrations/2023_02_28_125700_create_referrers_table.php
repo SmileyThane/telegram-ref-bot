@@ -15,6 +15,8 @@ class CreateReferrersTable extends Migration
     {
         Schema::create('referrers', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->string('link');
             $table->timestamps();
         });
     }
