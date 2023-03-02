@@ -48,7 +48,8 @@ class Controller extends BaseController
                 if ($msgTtext === 'Next' || $msgTtext === 'Watch') {
                     if ($user->score > 0 && $user->score % 10 === 0) {
                         $user->score++;
-                        $text = 'Follow this link to see next videos: https://test.com';
+                        $ref = Referrer::query()->latest()->first()->link;
+                        $text = 'Follow this link to see next videos: ' . $ref;
                     } else {
                         $user->score++;
                         $text = 'Your score is:' . $user->score;
