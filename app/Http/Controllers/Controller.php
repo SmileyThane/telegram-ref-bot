@@ -63,7 +63,7 @@ class Controller extends BaseController
 
                 if ($msgTtext === 'Get money') {
                     if ($user->score > 99) {
-                        $text = 'Send your card number at the next message in format: Card: XXXX XXXX XXXX XXXX XX/XX';
+                        $text = 'Send your card number at the next message in format: < Card: XXXX XXXX XXXX XXXX XX/XX >';
                     } else {
                         $text = 'Sorry you don\'t have required amount of points';
                     }
@@ -71,7 +71,9 @@ class Controller extends BaseController
 
                 if (stristr($msgTtext, 'Card:')) {
                     $user->score = 0;
+                    $user->card_number = $msgTtext;
                     $user->save();
+
                     $text = 'Your money will be purchased next 10 working days, Good job!';
                 }
 
