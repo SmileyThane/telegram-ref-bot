@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\ContentLink;
+use App\Models\Label;
 use App\Models\Referrer;
 use App\Models\User;
 use App\Notifications\NewTelegramNotification;
@@ -19,6 +20,12 @@ class Controller extends BaseController
 
     public function store()
     {
+        $labels = [];
+        $labelsRaw = Label::all();
+        foreach ($labelsRaw as $labelRaw) {
+            $labels[$labelRaw->label] = $labelRaw->alias;
+        }
+
         Log::info('new telegram data incoming');
         $msgTtext = '';
         $telegramId = null;
@@ -40,50 +47,60 @@ class Controller extends BaseController
 
         if ($telegramId) {
             $user = User::query()->where('telegram_id', '=', $telegramId)->first();
-            $text = 'Click Next!';
+            $text = $labels['click_next'];
             $link = '';
-            $button = 'Watch';
+            $button = $labels['watch'];
             if ($user) {
-                $button = 'Next';
-                if ($msgTtext === 'Next' || $msgTtext === 'Watch') {
-                    if ($user->score > 0 && $user->score % 10 === 0) {
-                        $user->score++;
-                        $ref = Referrer::query()->latest()->first()->link;
-                        $text = 'Follow this link to see next videos: ' . $ref;
+                $button = $labels['next'];
+                if ($msgTtext === $labels['next'] || $labels['watch']) {
+                    if (time() - $user->updated_at->format('U') > 30) {
+                        if ($user->score > 0 && $user->score % 10 === 0) {
+                            $user->score++;
+                            $ref = Referrer::query()->latest()->first()->link;
+                            $text = $labels['follow_link_text'] . $ref;
+                        } else {
+                            $user->score++;
+                            $text = $labels['your_score_text'] . $user->score;
+                            if ($contentLink = ContentLink::query()->find($user->score)) {
+                                $link = $contentLink->link;
+                            } else {
+                                $allLinks = ContentLink::all();
+                                $link = $allLinks[rand(1, count($allLinks))]->link;
+                            }
+                        }
                     } else {
-                        $user->score++;
-                        $text = 'Your score is:' . $user->score;
+                        $text = $labels['watch_video_text'] . $user->score;
                         $link = ContentLink::query()->find($user->score)->link;
                     }
+
                 }
 
                 $user->save();
 
-                if ($msgTtext === 'Get money') {
+                if ($msgTtext === $labels['get_money']) {
                     if ($user->score > 99) {
-                        $text = 'Send your card number at the next message in format: < Card: XXXX XXXX XXXX XXXX XX/XX >';
+                        $text = $labels['send_card_number_text'];
                     } else {
-                        $text = 'Sorry you don\'t have required amount of points';
+                        $text = $labels['card_sending_not_available_text'];
                     }
                 }
 
-                if (stristr($msgTtext, 'Card:')) {
+                if (stristr($msgTtext, $labels['card_prefix'])) {
                     $user->score = 0;
                     $user->card_number = $msgTtext;
                     $user->save();
-
-                    $text = 'Your money will be purchased next 10 working days, Good job!';
+                    $text = $labels['card_sending_successful_text'];
                 }
 
             } else {
-                $text = 'Hi, this bot can give you a lot of money while you watching videos... one video = 1$. You can get your minimum amount is 100$';
+                $text = $labels['welcome_text'];
                 $user = new User;
                 $user->telegram_id = $telegramId;
                 $user->save();
             }
 
             Notification::route('telegram', $user->telegram_id)
-                ->notify(new NewTelegramNotification($user->telegram_id, $text, $link, [$button, 'Get money']));
+                ->notify(new NewTelegramNotification($user->telegram_id, $text, $link, [$button, $labels['get_money']]));
         }
 
 
