@@ -113,7 +113,8 @@
                             <div class="row mb-3">
                                 <label class="col-3 col-form-label text-md-end">{{$referrer->name}}</label>
                                 <div class="col-9">
-                                    <input class="form-control" name="referrers[]" value="{{$label->link}}">
+                                    <input type="hidden" name="referrers_name[{{$label->id}}]" value="{{$referrer->name}}">
+                                    <input id="referrers_{{$label->id}}" class="form-control" name="referrers[{{$referrer->id}}]" value="{{$referrer->link}}">
                                 </div>
                             </div>
                         @endforeach
