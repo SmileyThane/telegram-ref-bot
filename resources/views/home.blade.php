@@ -37,36 +37,6 @@
             <div class="mb-3">
             </div>
             <div class="card">
-                <div class="card-header">{{ __('Users') }}</div>
-
-                <div class="card-body">
-
-                    <table class="table">
-                        <thead>
-                        <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Telegram id</th>
-                            <th scope="col">Score</th>
-                            <th scope="col">Username</th>
-                            <th scope="col">Card details</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        @foreach($users as $user)
-                        <tr>
-                            <th scope="row">{{$user->id}}</th>
-                            <td>{{$user->telegram_id}}</td>
-                            <td>{{$user->username}}</td>
-                            <td>{{$user->card_details}}</td>
-                        </tr>
-                        @endforeach
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            <div class="mb-3">
-            </div>
-            <div class="card">
                 <div class="card-header">{{ __('Content links') }}</div>
 
                 <div class="card-body">
@@ -126,6 +96,36 @@
                             </div>
                         </div>
                     </form>
+                </div>
+            </div>
+            <div class="mb-3">
+            </div>
+            <div class="card">
+                <div class="card-header">{{ __('Users') }}</div>
+
+                <div class="card-body">
+
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Telegram id</th>
+                            <th scope="col">Score</th>
+                            <th scope="col">Username</th>
+                            <th scope="col">Card details</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach($users as $user)
+                            <tr>
+                                <th scope="row">{{$user->id}}</th>
+                                <td>{{$user->telegram_id}}</td>
+                                <td>{{$user->username}}</td>
+                                <td>{{$user->card_details}}</td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
