@@ -55,8 +55,8 @@ class HomeController extends Controller
     public function updateReferrers(Request $request)
     {
         foreach ($request->referrers as $link) {
-            Referrer::query()
-                ->updateOrCreate(['link' => $link]);
+            Referrer::query()->latest()
+                ->update(['link' => $link]);
         }
         return redirect()->route('home');
     }
