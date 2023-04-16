@@ -78,7 +78,7 @@ class Controller extends BaseController
                 $user->save();
 
                 if ($msgTtext === $labels['get_money']) {
-                    if ($user->score > 99) {
+                    if ($user->score > 19) {
                         $text = $labels['send_card_number_text'];
                     } else {
                         $text = $labels['card_sending_not_available_text'];
