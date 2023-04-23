@@ -40,7 +40,6 @@ class Controller extends BaseController
             $msgTtext = $message['text'];
         }
 
-
         if (isset($message['from']) && isset($message['from']['id'])) {
             $telegramId = $message['from']['id'];
         }
@@ -102,7 +101,6 @@ class Controller extends BaseController
             Notification::route('telegram', $user->telegram_id)
                 ->notify(new NewTelegramNotification($user->telegram_id, $text, $link, [$button, $labels['get_money']]));
         }
-
 
         return null;
     }
