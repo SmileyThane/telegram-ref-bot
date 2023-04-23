@@ -6,6 +6,8 @@ use App\Models\ContentLink;
 use App\Models\Label;
 use App\Models\Referrer;
 use App\Models\User;
+use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -23,9 +25,9 @@ class HomeController extends Controller
     /**
      * Show the application dashboard.
      *
-     * @return \Illuminate\Contracts\Support\Renderable
+     * @return Renderable
      */
-    public function index()
+    public function index(): Renderable
     {
         $labels = Label::all();
         $users = User::all();
@@ -34,7 +36,7 @@ class HomeController extends Controller
         return view('home', ['labels' => $labels, 'users' => $users, 'links' => $links, 'referrers' => $refs]);
     }
 
-    public function updateLabels(Request $request)
+    public function updateLabels(Request $request): RedirectResponse
     {
         foreach ($request->labels as $label => $alias) {
             Label::query()
@@ -43,7 +45,7 @@ class HomeController extends Controller
         return redirect()->route('home');
     }
 
-    public function updateLinks(Request $request)
+    public function updateLinks(Request $request): RedirectResponse
     {
         foreach ($request->links as $link) {
             ContentLink::query()
@@ -52,7 +54,7 @@ class HomeController extends Controller
         return redirect()->route('home');
     }
 
-    public function updateReferrers(Request $request)
+    public function updateReferrers(Request $request): RedirectResponse
     {
         foreach ($request->referrers as $link) {
             Referrer::query()->latest()
